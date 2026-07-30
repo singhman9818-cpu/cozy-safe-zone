@@ -80,20 +80,14 @@
             margin-top: 8px;
             cursor: pointer;
         }
-        .action-link {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 12px 20px;
-            background: #3b82f6;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
     </style>
 </head>
 <body>
+
+    <!-- Looping Audio File -->
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="card" id="game-card">
         <div class="icon-badge" id="icon">🌿</div>
@@ -111,6 +105,12 @@
 
     <script>
         function step(choice) {
+            // Smoothly starts the looping audio on her first tap
+            const music = document.getElementById('bg-music');
+            if (music) {
+                music.play().catch(() => {});
+            }
+
             const icon = document.getElementById('icon');
             const title = document.getElementById('title');
             const text = document.getElementById('text');
