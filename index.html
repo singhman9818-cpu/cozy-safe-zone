@@ -91,16 +91,16 @@
 
     <div class="card" id="game-card">
         <div class="icon-badge" id="icon">🌿</div>
-        <h1 id="title">The Safe Space & Reset Hub</h1>
-        <p id="text">Zero awkwardness, zero overthinking, and no expectations. Pick whichever mode fits your current energy best right now:</p>
+        <h1 id="title">The Safe Space & Reset Hub 🤍</h1>
+        <p id="text">Zero awkwardness, zero overthinking, and no expectations ✨. Pick whichever mode fits your current energy best right now:</p>
         
         <div id="options">
-            <button class="btn" onclick="step(1)">🕊️ <b>Option 1: Complete Reset</b><br><span style="font-size:0.8rem; opacity:0.8;">Wipe the slate clean—no lingering bad vibes.</span></button>
-            <button class="btn" onclick="step(2)">🧸 <b>Option 2: Pure Reassurance</b><br><span style="font-size:0.8rem; opacity:0.8;">A gentle reminder that I'm always in your corner.</span></button>
-            <button class="btn" onclick="step(3)">🍕 <b>Option 3: Peace Offering</b><br><span style="font-size:0.8rem; opacity:0.8;">Skip all serious talks and jump straight to cozy routines.</span></button>
+            <button class="btn" onclick="step(1)">🕊️ <b>Option 1: Complete Reset</b><br><span style="font-size:0.8rem; opacity:0.8;">Wipe the slate clean—no lingering bad vibes ✨</span></button>
+            <button class="btn" onclick="step(2)">🧸 <b>Option 2: Pure Reassurance</b><br><span style="font-size:0.8rem; opacity:0.8;">A gentle reminder that I'm always in your corner 🤍</span></button>
+            <button class="btn" onclick="step(3)">🍕 <b>Option 3: Peace Offering</b><br><span style="font-size:0.8rem; opacity:0.8;">Skip all serious talks and jump straight to cozy routines ☕</span></button>
         </div>
         
-        <button class="pass-btn" onclick="step(4)" id="pass">Just needing quiet time right now (Zero pressure)</button>
+        <button class="pass-btn" onclick="step(4)" id="pass">Just needing quiet time right now 🌙 (Zero pressure)</button>
     </div>
 
     <script>
@@ -119,26 +119,26 @@
 
             if (choice === 1) {
                 icon.innerText = "✨";
-                title.innerText = "Official Reset Activated";
-                text.innerText = "Consider any recent stress officially cleared. Whatever was heavy or confusing is left behind. We start fresh right here with a completely clean slate.";
+                title.innerText = "Official Reset Activated 🤍";
+                text.innerText = "Consider any recent stress officially cleared 🤍. Whatever was heavy or confusing is left behind ✨. We start fresh right here with a completely clean slate.";
                 options.innerHTML = `<button class="btn" onclick="location.reload()">↺ Explore other options</button>`;
                 pass.style.display = "none";
             } else if (choice === 2) {
                 icon.innerText = "🛡️";
-                title.innerText = "Always In Your Corner";
-                text.innerText = "No matter how quiet things get or how busy life feels, you never have to doubt where we stand. I'm always supporting you, fully patient, and right here whenever you want to talk.";
+                title.innerText = "Always In Your Corner 🧸";
+                text.innerText = "No matter how quiet things get or how busy life feels, you never have to doubt where we stand 🤍. I'm always supporting you, fully patient, and right here whenever you want to talk ✨.";
                 options.innerHTML = `<button class="btn" onclick="location.reload()">↺ Explore other options</button>`;
                 pass.style.display = "none";
             } else if (choice === 3) {
                 icon.innerText = "☕";
-                title.innerText = "Normalcy Restored";
-                text.innerText = "No lengthy explanations needed. Let's just get back to our usual jokes, sharing random updates, and simple comfort.";
+                title.innerText = "Normalcy Restored 🍕";
+                text.innerText = "No lengthy explanations needed ☕. Let's just get back to our usual jokes, sharing random updates, and simple comfort 🧸.";
                 options.innerHTML = `<button class="btn" onclick="location.reload()">↺ Explore other options</button>`;
                 pass.style.display = "none";
             } else if (choice === 4) {
                 icon.innerText = "🌙";
-                title.innerText = "Rest Mode Honored";
-                text.innerText = "Totally understood! Take all the space and time you need to recharge. Whenever you feel like reaching back out, I'll be right here.";
+                title.innerText = "Rest Mode Honored ✨";
+                text.innerText = "Totally understood 🌙. Take all the space and time you need to recharge 🤍. Whenever you feel like reaching back out, I'll be right here.";
                 options.innerHTML = `<button class="btn" onclick="location.reload()">↺ Back to menu</button>`;
                 pass.style.display = "none";
             }
