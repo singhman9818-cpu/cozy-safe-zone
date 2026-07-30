@@ -3,112 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Safe Zone</title>
-    <!-- We are using A-Frame, a library that makes VR/3D scenes on the web very easy -->
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <title>The Safe Zone</title>
     <style>
-        /* Custom UI for messages */
-        #ui-overlay {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            background: rgba(255, 255, 255, 0.9);
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #1a1a24;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             padding: 20px;
-            border-radius: 15px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            display: none; /* Hidden by default */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 100;
         }
-        #ui-text {
-            color: #333;
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-        #close-btn {
-            background: #a8d5e2;
-            border: none;
-            padding: 8px 20px;
+        .card {
+            background: #252533;
             border-radius: 20px;
-            color: white;
+            padding: 25px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            border: 1px solid #38384d;
+        }
+        .emoji {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        h1 {
+            font-size: 1.4rem;
+            color: #ffffff;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        p {
+            font-size: 1rem;
+            color: #b3b3cc;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #33334d;
+            color: #8be9fd;
+            border: 1px solid #444466;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
             cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn:hover, .btn:active {
+            background: #444466;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .pass-btn {
+            background: transparent;
+            border: none;
+            color: #777799;
+            text-decoration: underline;
+            font-size: 0.85rem;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- This is the UI overlay where our messages appear -->
-    <div id="ui-overlay">
-        <p id="ui-text">You clicked something!</p>
-        <button id="close-btn">Okay</button>
+    <div class="card" id="game-card">
+        <div class="emoji" id="emoji">🌲</div>
+        <h1 id="title">Welcome to the Safe Zone</h1>
+        <p id="text">There are zero expectations here, no awkward conversations, and no rush. What sounds like the best prescription right now?</p>
+        
+        <div id="options">
+            <button class="btn" onclick="step(1)">☕ A warm cup of quiet & no questions asked</button>
+            <button class="btn" onclick="step(2)">🐱 A guaranteed distraction of funny memes</button>
+            <button class="btn" onclick="step(3)">🛡️ Immunity pass: whatever happened is forgotten forever</button>
+        </div>
+        
+        <button class="pass-btn" onclick="step(4)">I just want to rest (Pass option)</button>
     </div>
 
-    <!-- The 3D Scene starts here -->
-    <a-scene embedded cursor="rayOrigin: mouse">
-        <!-- Asset Management System (pre-load sounds) -->
-        <a-assets>
-            <audio id="rain-sound" src="https://cdn.glitch.global/0651660d-1e5b-439a-8b83-a7457a16175b/rain.mp3?v=1678893635745" preload="auto"></audio>
-        </assets>
-
-        <!-- Basic controls so she can look around -->
-        <a-entity camera look-controls position="0 1.6 0"></a-entity>
-        
-        <!-- The Sky - we make it a soft dusk color -->
-        <a-sky color="#CEDDF0"></a-sky>
-        
-        <!-- The Ground - a soft green -->
-        <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#7BC8A4"></a-plane>
-
-        <!-- Ambient Sound (Cozy Rain) -->
-        <a-entity sound="src: #rain-sound; autoplay: true; loop: true; volume: 0.3"></a-entity>
-        
-        <!-- Interactive Objects -->
-
-        <!-- THE TREE: Click for a main message -->
-        <a-entity id="main-tree" position="0 0 -5" class="clickable">
-            <!-- Simple Tree (Trunk + Leaves) -->
-            <a-cylinder position="0 1 0" radius="0.5" height="2" color="#8B4513"></a-cylinder>
-            <a-cone position="0 2.5 0" radius-bottom="2" radius-top="0" height="2" color="#228B22"></a-cone>
-            
-            <!-- Click Interaction Logic for the Tree -->
-            <a-event name="click" 
-                     onclick="showMessage('Welcome to the Safe Zone. No pressure here. Take all the time you need. When you are ready, look at the other glowing things in the forest.')">
-            </a-event>
-        </a-entity>
-
-        <!-- THE ROCK: A smaller interaction -->
-        <a-dodecahedron id="cozy-rock" color="#808080" radius="1" position="3 0.5 -4" class="clickable"
-                         onclick="showMessage('You feel the smooth surface of the rock. It is ancient and calm. It does not judge.')">
-        </a-dodecahedron>
-
-        <!-- THE LANTERN: A warm glow -->
-        <a-light type="point" color="#FFFACD" intensity="1" position="-3 2 -3"></a-light>
-        <a-cylinder id="lantern" color="#FFD700" radius="0.1" height="0.5" position="-3 1.5 -3" class="clickable"
-                    onclick="showMessage('The small lantern glows warmly. Its only job is to provide light, not problems.')">
-        </a-cylinder>
-        
-        <!-- Adding some passive lights and clutter for ambiance -->
-        <a-light type="ambient" color="#BBB"></a-light>
-        <a-light type="directional" color="#FFF" intensity="0.6" position="-1 1 1"></a-light>
-
-    </a-scene>
-
     <script>
-        // Simple JavaScript function to show the UI overlay
-        function showMessage(text) {
-            document.getElementById('ui-text').innerText = text;
-            document.getElementById('ui-overlay').style.display = 'block';
-        }
+        function step(choice) {
+            const emoji = document.getElementById('emoji');
+            const title = document.getElementById('title');
+            const text = document.getElementById('text');
+            const options = document.getElementById('options');
 
-        // JavaScript to hide the UI when "Okay" is clicked
-        document.getElementById('close-btn').addEventListener('click', function() {
-            document.getElementById('ui-overlay').style.display = 'none';
-        });
+            if (choice === 1) {
+                emoji.innerText = "☕";
+                title.innerText = "Rest Mode Activated";
+                text.innerText = "Option granted. Take all the quiet space you need. You don't have to explain anything or reply until you feel 100% ready.";
+                options.innerHTML = `<button class="btn" onclick="location.reload()">↺ Start Over</button>`;
+            } else if (choice === 2) {
+                emoji.innerText = "✨";
+                title.innerText = "Distraction Protocol";
+                text.innerText = "Good choice! Whatever felt overwhelming earlier has zero power here. Sending funny memes and zero pressure your way.";
+                options.innerHTML = `<button class="btn" onclick="location.reload()">↺ Start Over</button>`;
+            } else if (choice === 3) {
+                emoji.innerText = "📜";
+                title.innerText = "Official Immunity Granted";
+                text.innerText = "By clicking this, a permanent rule has been locked in: No judging, no awkwardness, and total reset. Everything is completely fine!";
+                options.innerHTML = `<button class="btn" onclick="location.reload()">↺ Start Over</button>`;
+            } else if (choice === 4) {
+                emoji.innerText = "🌙";
+                title.innerText = "Zero Pressure Pass";
+                text.innerText = "Totally understandable. Rest up and recharge. You can come back whenever you like!";
+                options.innerHTML = `<button class="btn" onclick="location.reload()">↺ Start Over</button>`;
+            }
+        }
     </script>
 
 </body>
 </html>
+
