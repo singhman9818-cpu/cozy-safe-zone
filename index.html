@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Safe Zone</title>
+    <!-- We are using A-Frame, a library that makes VR/3D scenes on the web very easy -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <style>
+        /* Custom UI for messages */
+        #ui-overlay {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            display: none; /* Hidden by default */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+        #ui-text {
+            color: #333;
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+        #close-btn {
+            background: #a8d5e2;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- This is the UI overlay where our messages appear -->
+    <div id="ui-overlay">
+        <p id="ui-text">You clicked something!</p>
+        <button id="close-btn">Okay</button>
+    </div>
+
+    <!-- The 3D Scene starts here -->
+    <a-scene embedded cursor="rayOrigin: mouse">
+        <!-- Asset Management System (pre-load sounds) -->
+        <a-assets>
+            <audio id="rain-sound" src="https://cdn.glitch.global/0651660d-1e5b-439a-8b83-a7457a16175b/rain.mp3?v=1678893635745" preload="auto"></audio>
+        </assets>
+
+        <!-- Basic controls so she can look around -->
+        <a-entity camera look-controls position="0 1.6 0"></a-entity>
+        
+        <!-- The Sky - we make it a soft dusk color -->
+        <a-sky color="#CEDDF0"></a-sky>
+        
+        <!-- The Ground - a soft green -->
+        <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#7BC8A4"></a-plane>
+
+        <!-- Ambient Sound (Cozy Rain) -->
+        <a-entity sound="src: #rain-sound; autoplay: true; loop: true; volume: 0.3"></a-entity>
+        
+        <!-- Interactive Objects -->
+
+        <!-- THE TREE: Click for a main message -->
+        <a-entity id="main-tree" position="0 0 -5" class="clickable">
+            <!-- Simple Tree (Trunk + Leaves) -->
+            <a-cylinder position="0 1 0" radius="0.5" height="2" color="#8B4513"></a-cylinder>
+            <a-cone position="0 2.5 0" radius-bottom="2" radius-top="0" height="2" color="#228B22"></a-cone>
+            
+            <!-- Click Interaction Logic for the Tree -->
+            <a-event name="click" 
+                     onclick="showMessage('Welcome to the Safe Zone. No pressure here. Take all the time you need. When you are ready, look at the other glowing things in the forest.')">
+            </a-event>
+        </a-entity>
+
+        <!-- THE ROCK: A smaller interaction -->
+        <a-dodecahedron id="cozy-rock" color="#808080" radius="1" position="3 0.5 -4" class="clickable"
+                         onclick="showMessage('You feel the smooth surface of the rock. It is ancient and calm. It does not judge.')">
+        </a-dodecahedron>
+
+        <!-- THE LANTERN: A warm glow -->
+        <a-light type="point" color="#FFFACD" intensity="1" position="-3 2 -3"></a-light>
+        <a-cylinder id="lantern" color="#FFD700" radius="0.1" height="0.5" position="-3 1.5 -3" class="clickable"
+                    onclick="showMessage('The small lantern glows warmly. Its only job is to provide light, not problems.')">
+        </a-cylinder>
+        
+        <!-- Adding some passive lights and clutter for ambiance -->
+        <a-light type="ambient" color="#BBB"></a-light>
+        <a-light type="directional" color="#FFF" intensity="0.6" position="-1 1 1"></a-light>
+
+    </a-scene>
+
+    <script>
+        // Simple JavaScript function to show the UI overlay
+        function showMessage(text) {
+            document.getElementById('ui-text').innerText = text;
+            document.getElementById('ui-overlay').style.display = 'block';
+        }
+
+        // JavaScript to hide the UI when "Okay" is clicked
+        document.getElementById('close-btn').addEventListener('click', function() {
+            document.getElementById('ui-overlay').style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>
